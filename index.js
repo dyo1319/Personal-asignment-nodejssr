@@ -7,7 +7,9 @@ const bodyParser = require('body-parser');
 const path = require("path");
 app.use(bodyParser.urlencoded({extended: false}));
 
-
+var cookieParser = require('cookie-parser');
+app.use(cookieParser());
+global.jwt = require('jsonwebtoken');
 
 let db_M = require('./database');
 global.db_pool = db_M.pool;
@@ -19,8 +21,14 @@ global.addSlashes    = require('slashes').addSlashes;
 global.stripSlashes  = require('slashes').stripSlashes;
 
 
+const user_Mid = require("./middleware/user_Mid");
+
 const usr_R = require('./routers/users_R');
-app.use('/U',usr_R);
+app.use('/U',[user_Mid.isLogged],usr_R);
+const auth_R = require('./routers/auth_R');
+app.use('/',auth_R);
+
+
 
 
 app.get('/', (req, res) => {
