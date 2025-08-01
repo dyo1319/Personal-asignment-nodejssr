@@ -18,7 +18,7 @@ router.get("/Edit/:id",[user_Mid.GetOneUser],(req,res)=>{
             data: req.one_user_data,
         });
     } else{
-        res.redirect("/u/List");/// will be updated in future to missions list
+        res.redirect("/cat/List");/// will be updated in future to missions list
     }
 });
 router.post("/Edit/:id", [user_Mid.UpdateUser], (req, res) => {
