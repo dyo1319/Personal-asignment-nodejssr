@@ -19,6 +19,8 @@ global.addSlashes    = require('slashes').addSlashes;
 global.stripSlashes  = require('slashes').stripSlashes;
 
 
+const usr_R = require('./routers/users_R');
+app.use('/U',usr_R);
 
 
 app.get('/', (req, res) => {
