@@ -22,7 +22,6 @@ async function AddNewTask(req, res, next) {
     }
     next();
 }
-
 async function GetAllTasks(req,res,next){
     let user_id       =  req.user_id;
     let ed            = (req.query.ed          !== undefined)        ? addSlashes(req.query.ed)         : "";
@@ -88,25 +87,25 @@ async function GetAllTasks(req,res,next){
 
     next();
 }
-
-async function MarkTaskDone(req, res, next) {
+async function MarkTask(req, res, next) {
     let user_id = req.user_id;
     let taskId = req.params.taskId;
+    let done = req.body.done !== undefined ? req.body.done : 1;
     
-    let Query = `UPDATE tasks SET done = 1 WHERE id = '${taskId}' AND user_id = '${user_id}'`;
+    let doneValue = done == 1 ? 1 : 0;
+    let Query = `UPDATE tasks SET done = ? WHERE id = ? AND user_id = ?`;
     
     const promisePool = db_pool.promise();
     try {
-        await promisePool.query(Query);
+        await promisePool.query(Query, [doneValue, taskId, user_id]);
     } catch (err) {
         console.log(err);
     }
     next();
 }
 
-
 module.exports = {
     AddNewTask,
     GetAllTasks,
-    MarkTaskDone
+    MarkTask,
 }

@@ -26,6 +26,6 @@ router.get("/List",[task_Mid.GetAllTasks,cat_Mid.GetCategoriesNames,cat_Mid.GetA
         total_pages           : req.total_pages       ,
     });
 });
-router.get('/markDone/:taskId', [task_Mid.MarkTaskDone], (req, res) => {
-    res.redirect("./List"); 
+router.post('/markTask/:taskId', [task_Mid.MarkTask], (req, res) => {
+    res.redirect("../List"); 
 });

@@ -48,7 +48,6 @@
         <th>קטגוריה</th>
         <th>תיאור המשימה</th>
         <th>האם בוצע</th>
-        <th>פעולות</th>
     </tr>
     <% for(let task of task_data) { %>
         <tr>
@@ -56,15 +55,16 @@
             <td><%= categories_names[task.category_id] %></td>
             <td><%= task.description %></td>
             <td>
-                <% if(task.done == 1) { %>
-                    <span style="color: green;">✓ בוצע</span>
-                <% } else { %>
-                    <span style="color: red;">✗ לא בוצע</span>
-                <% } %>
-            </td>
-            <td>
                 <% if(task.done == 0) { %>
-                    <a href="/a/markdone/<%= task.id %>">סמן כבוצע</a>
+                    <form action="/A/markTask/<%= task.id %>" method="post" style="display:inline;">
+                        <input type="hidden" name="done" value="1">
+                        <button type="submit">סמן כבוצע</button>
+                    </form>
+                <% } else { %>
+                    <form action="/A/markTask/<%= task.id %>" method="post" style="display:inline;">
+                        <input type="hidden" name="done" value="0">
+                        <button type="submit">סמן כלא בוצע</button>
+                    </form>
                 <% } %>
             </td>
         </tr>
