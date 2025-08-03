@@ -9,24 +9,25 @@
     <style>
         td,th{border: 1px solid black;}
         .centered{text-align: center;}
+        body {direction: rtl}
     </style>
 </head>
 <body>
+    <%- include("nav") %>
 <H1><%= page_title %></H1>
-<a href="/U/Add">add user</a>
+<a href="/U/Add">הוספת משתמש</a>
+<br></br>
 <table>
     <tr>
-        <th></th>
+        
         <th>שם</th>
         <th>מייל</th>
         <th>תז</th>
+        <th>פעולות</th>
         <th></th>
     </tr>
     <% for(let usr of users){ %>
         <tr>
-            <td>
-                <a href="/U/Edit/<%= usr.id %>">edit</a>
-            </td>
             <td><%= usr.name %></td>
             <td><%= usr.email %></td>
             <td><%= usr.tz %></td>
@@ -37,6 +38,9 @@
                         מחיקה
                     </button>
                 </form>
+            </td>
+            <td>
+                <a href="/U/Edit/<%= usr.id %>">עריכה</a>
             </td>
         </tr>
     <% } %>

@@ -11,6 +11,7 @@
     </style>
 </head>
 <body>
+<%- include("nav") %>
 <H1><%= page_title %></H1>
 <table>
     <tr><td colspan="55">
@@ -77,7 +78,7 @@
                 </form>
             </td>
              <td>
-                <a href="/A/Edit/<%= task.id %>">edit</a>
+                <a href="/A/Edit/<%= task.id %>">עריכה</a>
             </td>
         </tr>
     <% } %>

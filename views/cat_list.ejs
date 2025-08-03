@@ -17,11 +17,13 @@
         padding: 8px;
         text-align: center;
     }
+    body {direction: rtl}
 </style>
 </head>
 <body>
+    <%- include("nav") %>
 <H1><%= page_title %></H1>
-<a href="/cat/Add">add category</a>
+<a href="/cat/Add">הוספת קטגוריה</a>
 <table>
     <tr>
         <th></th>
@@ -31,7 +33,7 @@
     <% for(let cat of categories){ %>
         <tr>
             <td>
-                <a href="/cat/Edit/<%= cat.id %>">edit</a>
+                <a href="/cat/Edit/<%= cat.id %>">עריכה</a>
             </td>
             <td><%= cat.name %></td>
             <td>
