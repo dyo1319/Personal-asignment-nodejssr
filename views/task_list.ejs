@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%= page_title %></title>
+    <style>
+        body {direction: rtl}
+    </style>
+</head>
+<body>
+<H1><%= page_title %></H1>
+<table>
+    <tr><td colspan="55">
+            <form action="" method="get">
+                <label for="ed">עד תאריך</label>
+                <input type="date" name="ed" id="ed" value="<%= filter_params.ed %>">
+                <label for="category_id">קטגוריה:</label>
+                <select name="category_id" id="category_id">
+                    <option value="-1"
+                            <% if(filter_params.category_id == -1){ __append('selected="1" '); }%>
+                    >--- כל הגטגריות ---</option>
+                <% for(let cat of categories) { %>
+                        <option value="<%= cat.id %>"
+                                <% if(filter_params.category_id == cat.id){ __append('selected="1" '); }%>
+                        ><%= cat.name %></option>
+                    <% } %>
+                </select>
+                <label for="done">סטטוס:</label>
+                <select name="done" id="done">
+                    <option value="-1"
+                            <% if(filter_params.done == -1){ __append('selected="1" '); }%>
+                    >--- הכל ---</option>
+                    <option value="0"
+                            <% if(filter_params.done == 0){ __append('selected="1" '); }%>
+                    >לא בוצע</option>
+                    <option value="1"
+                            <% if(filter_params.done == 1){ __append('selected="1" '); }%>
+                    >בוצע</option>
+                </select>
+                <button>סנן</button>
+            </form>
+        </td></tr>
+    <tr>
+        <th>תאריך יעד</th>
+        <th>קטגוריה</th>
+        <th>תיאור המשימה</th>
+        <th>האם בוצע</th>
+        <th>פעולות</th>
+    </tr>
+    <% for(let task of task_data) { %>
+        <tr>
+            <td><%= task.nice_date %></td>
+            <td><%= categories_names[task.category_id] %></td>
+            <td><%= task.description %></td>
+            <td>
+                <% if(task.done == 1) { %>
+                    <span style="color: green;">✓ בוצע</span>
+                <% } else { %>
+                    <span style="color: red;">✗ לא בוצע</span>
+                <% } %>
+            </td>
+            <td>
+                <% if(task.done == 0) { %>
+                    <a href="/a/markdone/<%= task.id %>">סמן כבוצע</a>
+                <% } %>
+            </td>
+        </tr>
+    <% } %>
+    <tr>
+        <td colspan="100" class="centered">
+            <br/>
+            <form action="" method="get">
+                <input type="hidden" name="ed" value="<%= filter_params.ed %>">
+                <input type="hidden" name="category_id" value="<%= filter_params.category_id %>">
+                <input type="hidden" name="done" value="<%= filter_params.done %>">
+                <% if(page > 0) { %>
+            <button name="p" value="<%= page-1 %>">הקודם</button>
+                    <% } %>
+            עמוד <%= page+1 %>
+                    מתוך
+                    <%= total_pages+1 %>
+            <% if(page < total_pages) { %>
+            <button name="p" value="<%= page+1 %>">הבא</button>
+            <% } %>
+            </form>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

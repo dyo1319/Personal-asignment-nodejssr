@@ -38,10 +38,7 @@ async function GetAllCategories(req,res,next){
         wh += (wh === "")?" WHERE " : " AND ";
         wh += ` ( name LIKE '%${filter}%' )`;
     }
-    // if(req.user_id !== undefined){
-    //     wh += (wh === "")?" WHERE " : " AND ";
-    //     wh += ` ( id IN (SELECT crs_id FROM crs2user WHERE user_id=${req.user_id}) )`;
-    // }
+
     Query += wh;
     Query += " ORDER BY name ASC ";
     Query+= " LIMIT 0,100 ";

@@ -6,6 +6,7 @@ const cat_Mid = require("../middleware/cat_Mid");
 
 router.get("/Add",(req,res)=>{
     res.render("cat_add",{
+        page_title: "הוספת קטגוריה",
         data:{},
     });
 });
@@ -15,6 +16,7 @@ router.post("/Add", [cat_Mid.AddCategory], (req, res) => {
 router.get("/Edit/:id",[cat_Mid.GetOneCategory],(req,res)=>{
     if(req.GoodOne) {
         res.render("cat_add", {
+            page_title: "עריכת קטגוריה",
             data: req.one_category_data,
         });
     } else{
@@ -26,8 +28,8 @@ router.post("/Edit/:id", [cat_Mid.UpdateCategory], (req, res) => {
 });
 router.get("/List",[cat_Mid.GetAllCategories],(req,res)=>{
     res.render("cat_list",{
-        page_title : "רשימת קטגוריות",
-        categories:  req.categories_data,
+        page_title : "רשימת קטגוריות"    ,
+        categories :  req.categories_data ,
     });
 });
 router.post("/Delete",[cat_Mid.DeleteCategory],(req,res)=>{
