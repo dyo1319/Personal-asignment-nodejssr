@@ -1,27 +1,32 @@
 var md5 = require('md5');
 
-async function isLogged(req, res,next){
+async function isLogged(req, res, next) {
     const jwtToken = req.cookies.ImLogged;
-    let user_id=-1;
-    if (jwtToken !== "") {
-        jwt.verify(jwtToken, 'myPrivateKey', async (err, decodedToken) => {
-            // console.log("decodedToken=",decodedToken);
-            if (err) {
-                console.log("err=",err);
-            } else {
-                // let val = `${rows[0].id},${rows[0].name}`;
-                let data = decodedToken.data;
-                // console.log("data=",data);
-                user_id = data.split(",")[0];
-                req.user_id=user_id;
-            }
-        })
-    }
-    if(user_id < 0)
-        res.redirect("/login");
 
-    next();
+    if (!jwtToken) {
+        return res.redirect("/login");
+    }
+
+    try {
+        const decodedToken = await new Promise((resolve, reject) => {
+            jwt.verify(jwtToken, 'myPrivateKey', (err, decoded) => {
+                if (err) reject(err);
+                else resolve(decoded);
+            });
+        });
+
+        let data = decodedToken.data;
+        let user_id = data.split(",")[0];
+        req.user_id = user_id;
+
+        next(); 
+
+    } catch (err) {
+        console.log("JWT error:", err);
+        return res.redirect("/login");
+    }
 }
+
 async function CheckLogin(req, res,next) {
     let uname   = (req.body.uname  !== undefined) ? addSlashes(req.body.uname     ) : "";
     let passwd  = (req.body.passwd !== undefined) ?            req.body.passwd      : "";
