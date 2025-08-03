@@ -103,9 +103,79 @@ async function MarkTask(req, res, next) {
     }
     next();
 }
+async function DeleteTask(req,res,next){
+    let id = parseInt(req.body.id);
+    if(id > 0) {
+        let Query = `DELETE FROM tasks WHERE id='${id}' `;
+        const promisePool = db_pool.promise();
+        let rows = [];
+        try {
+            [rows] = await promisePool.query(Query);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    next();
+
+}
+async function UpdateTask(req,res,next){
+    let user_id      = req.user_id;
+    let description  = (req.body.description !== undefined)  ?      addSlashes(req.body.description)  : ""  ;
+    let due_date     = (req.body.due_date    !== undefined)  ?      addSlashes(req.body.due_date)     : ""  ;
+    let category_id  = (req.body.category_id !== undefined)  ?           Number(req.body.category_id) : null;
+    let done         = (req.body.done        !== undefined)  ?   1 : 0;
+   if(user_id <= 0){
+        req.GoodOne=false;
+        return next();
+    }
+    req.GoodOne=true;
+
+    let Query=`UPDATE tasks SET `;
+    Query +=`description   ='${description   }' ,`;
+    Query +=`due_date  ='${due_date  }' ,`;
+    Query +=`category_id  ='${category_id  }' ,`;
+    Query +=`done     ='${done     }'  `;
+    Query +=` WHERE id='${user_id}'`;
+    const promisePool = db_pool.promise();
+    let rows=[];
+    try {
+        [rows] = await promisePool.query(Query);
+    } catch (err) {
+        console.log(err);
+    }
+
+    next();
+}
+async function GetOneTask(req,res,next){
+    let id = parseInt(req.params.id);
+
+    if((id === NaN) || (id <= 0)){
+        req.GoodOne=false;
+        return next();
+    }
+    req.GoodOne=true;
+    let Query=`SELECT * FROM tasks  WHERE id='${id}' `;
+    const promisePool = db_pool.promise();
+    let rows=[];
+    req.one_task_data=[];
+    try {
+        [rows] = await promisePool.query(Query);
+        if(rows.length > 0) {
+            req.one_task_data = rows[0];
+        }
+    } catch (err) {
+        console.log(err);
+    }
+
+    next();
+}
 
 module.exports = {
     AddNewTask,
     GetAllTasks,
     MarkTask,
+    DeleteTask,
+    UpdateTask,
+    GetOneTask
 }

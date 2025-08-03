@@ -48,6 +48,7 @@
         <th>קטגוריה</th>
         <th>תיאור המשימה</th>
         <th>האם בוצע</th>
+        <th>פעולות</th>
     </tr>
     <% for(let task of task_data) { %>
         <tr>
@@ -66,6 +67,17 @@
                         <button type="submit">סמן כלא בוצע</button>
                     </form>
                 <% } %>
+            </td>
+            <td>
+                <form action="/A/Delete" method="post">
+                    <input type="hidden" name="id" value="<%= task.id %>">
+                    <button>
+                        מחיקה
+                    </button>
+                </form>
+            </td>
+             <td>
+                <a href="/A/Edit/<%= task.id %>">edit</a>
             </td>
         </tr>
     <% } %>

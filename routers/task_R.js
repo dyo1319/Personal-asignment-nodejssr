@@ -29,3 +29,21 @@ router.get("/List",[task_Mid.GetAllTasks,cat_Mid.GetCategoriesNames,cat_Mid.GetA
 router.post('/markTask/:taskId', [task_Mid.MarkTask], (req, res) => {
     res.redirect("../List"); 
 });
+router.post("/Delete",[task_Mid.DeleteTask],(req,res)=>{
+    res.redirect("/A/List");
+})
+router.get("/Edit/:id",[task_Mid.GetOneTask,cat_Mid.GetCategoriesNames,cat_Mid.GetAllCategories],(req,res)=>{
+    if(req.GoodOne) {
+        res.render("task_add", {
+            page_title            : "עריכת משימה"         ,
+            data                  : req.one_task_data      ,
+            categories            : req.categories_data    ,
+            categories_names      : req.categories_names   ,
+        });
+    } else{
+        res.redirect("/A/List");
+    }
+});
+router.post("/Edit/:id", [task_Mid.UpdateTask], (req, res) => {
+    res.redirect("/A/List");
+});
