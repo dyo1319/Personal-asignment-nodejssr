@@ -27,11 +27,13 @@ router.get("/List",[task_Mid.GetAllTasks,cat_Mid.GetCategoriesNames,cat_Mid.GetA
     });
 });
 router.post('/markTask/:taskId', [task_Mid.MarkTask], (req, res) => {
-    res.redirect("../List"); 
+    let { ed, category_id, done, p } = req.query;
+    res.redirect(`/A/List?ed=${ed || ""}&category_id=${category_id || -1}&done=${done || -1}&p=${p || 0}`);
 });
-router.post("/Delete",[task_Mid.DeleteTask],(req,res)=>{
-    res.redirect("/A/List");
-})
+router.post("/Delete", [task_Mid.DeleteTask], (req, res) => {
+    let { ed, category_id, done, p } = req.query;
+    res.redirect(`/A/List?ed=${ed || ""}&category_id=${category_id || -1}&done=${done || -1}&p=${p || 0}`);
+});
 router.get("/Edit/:id",[task_Mid.GetOneTask,cat_Mid.GetCategoriesNames,cat_Mid.GetAllCategories],(req,res)=>{
     if(req.GoodOne) {
         res.render("task_add", {

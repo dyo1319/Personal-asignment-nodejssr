@@ -1,5 +1,5 @@
-# Personal Asigment
-Personal Asigment app Wtih Nodejssr engine.
+# Personal Assignment 
+Personal Assignment  app Wtih Nodejssr engine.
 
 
 # packages used in the project

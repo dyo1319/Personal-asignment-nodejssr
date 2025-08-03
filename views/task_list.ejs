@@ -57,19 +57,19 @@
             <td><%= task.description %></td>
             <td>
                 <% if(task.done == 0) { %>
-                    <form action="/A/markTask/<%= task.id %>" method="post" style="display:inline;">
-                        <input type="hidden" name="done" value="1">
-                        <button type="submit">סמן כבוצע</button>
-                    </form>
+                  <form action="/A/markTask/<%= task.id %>?ed=<%= filter_params.ed %>&category_id=<%= filter_params.category_id %>&done=<%= filter_params.done %>&p=<%= page %>" method="post">
+                    <input type="hidden" name="done" value="1">
+                    <button type="submit">סמן כבוצע</button>
+                  </form>
                 <% } else { %>
-                    <form action="/A/markTask/<%= task.id %>" method="post" style="display:inline;">
+                    <form action="/A/markTask/<%= task.id %>?ed=<%= filter_params.ed %>&category_id=<%= filter_params.category_id %>&done=<%= filter_params.done %>&p=<%= page %>" method="post">
                         <input type="hidden" name="done" value="0">
                         <button type="submit">סמן כלא בוצע</button>
                     </form>
                 <% } %>
             </td>
             <td>
-                <form action="/A/Delete" method="post">
+                <form action="/A/Delete?ed=<%= filter_params.ed %>&category_id=<%= filter_params.category_id %>&done=<%= filter_params.done %>&p=<%= page %>" method="post">
                     <input type="hidden" name="id" value="<%= task.id %>">
                     <button>
                         מחיקה
