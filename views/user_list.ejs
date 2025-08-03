@@ -6,6 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title><%= page_title %></title>
+    <link rel="stylesheet" href="/a.css">
     <style>
         td,th{border: 1px solid black;}
         .centered{text-align: center;}
@@ -15,7 +16,7 @@
 <body>
     <%- include("nav") %>
 <H1><%= page_title %></H1>
-<a href="/U/Add">הוספת משתמש</a>
+<a href="/U/Add" class="button-link">הוספת משתמש</a>
 <br></br>
 <table>
     <tr>
@@ -40,7 +41,7 @@
                 </form>
             </td>
             <td>
-                <a href="/U/Edit/<%= usr.id %>">עריכה</a>
+                <a href="/U/Edit/<%= usr.id %>" class="button-link">עריכה</a>
             </td>
         </tr>
     <% } %>
